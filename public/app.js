@@ -10,13 +10,13 @@ require('./directives/timelion_grid');
 require('./directives/docs');
 require('./main.less');
 
-var timelionLogo = require('plugins/timelion/header.png');
+var timelionLogo = require('plugins/timelion/header.svg');
 document.title = 'Timelion - Kibana';
 
 require('ui/chrome')
 .setBrand({
-  'logo': 'url(' + timelionLogo + ') left no-repeat',
-  'smallLogo': 'url(' + timelionLogo + ') left no-repeat'
+  'logo': '#EA9249 url(' + timelionLogo + ') left no-repeat',
+  'smallLogo': '#EA9249 url(' + timelionLogo + ') left no-repeat'
 }).setTabs([]);
 
 var app = require('ui/modules').get('apps/timelion', ['angular-sortable-view']);
@@ -65,7 +65,9 @@ app.controller('timelion', function (
     load: require('plugins/timelion/partials/load_sheet.html'),
     save: require('plugins/timelion/partials/save_sheet.html'),
     options: require('plugins/timelion/partials/sheet_options.html'),
-    docs: '<timelion-docs></timelion-docs>'
+    docs: '<timelion-docs></timelion-docs>',
+    filter: require('ui/chrome/config/filter.html'),
+    interval: require('ui/chrome/config/interval.html')
   });
 
   if (config.get('timelion:showTutorial', true)) {
@@ -96,6 +98,7 @@ app.controller('timelion', function (
       savedSheet: savedSheet,
       state: $scope.state,
       search: $scope.search,
+      timefilter: $scope.timefilter,
       dontShowHelp: function () {
         config.set('timelion:showTutorial', false);
         $scope.configTemplate.toggle('docs');

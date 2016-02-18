@@ -9,6 +9,14 @@
 .timelion {
   position: relative;
 
+  &-nav {
+    padding-bottom: 0px;
+  }
+
+  &-actions {
+    margin-left: auto;
+  }
+
   &-container {
     margin: 20px;
   }
@@ -34,9 +42,8 @@
 
   &-stats {
     color: @text-color;
-    font-size: 0.9em;
-    padding: 5px 20px;
-    display: inline-block;
+    font-size: 0.8em;
+    margin-top: 7px;
   }
 
   &-buttons {
@@ -123,6 +130,7 @@ select.timelion-interval {
   padding: .5em;
   padding-right: 1.5em;
   border-left: 0px;
+  height: 34px !important;
 
   &-other {
     width: 10px !important;
@@ -131,6 +139,7 @@ select.timelion-interval {
 
 
 input.timelion-interval {
+  height: 34px !important;
   width: 40px !important;
   padding: .5em;
   border-right: 0px;
