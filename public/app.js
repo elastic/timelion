@@ -1,5 +1,10 @@
 var _ = require('lodash');
 var logoUrl = require('./logo.png');
+<<<<<<< HEAD
+=======
+var configFile = require('../timelion.json');
+var moment = require('moment-timezone');
+>>>>>>> 0f0d63c... Correctly use moment-timezone. Truely closes #86
 
 require('angularSortableView');
 
@@ -50,6 +55,10 @@ require('ui/routes')
 
 app.controller('timelion', function (
   $scope, $http, timefilter, AppState, courier, $route, $routeParams, kbnUrl, Notifier, config, $timeout, Private) {
+
+  // TODO: For some reason the Kibana core doesn't correctly do this for all apps. 
+  moment.tz.setDefault(config.get('dateFormat:tz'));
+
   timefilter.enabled = true;
   var notify = new Notifier({
     location: 'Timelion'
