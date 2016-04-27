@@ -13,6 +13,11 @@ var rimraf = require('rimraf');
 var tar = require('gulp-tar');
 var gzip = require('gulp-gzip');
 var fs = require('fs');
+<<<<<<< HEAD
+=======
+var child = require('child_process');
+var semver = require('semver');
+>>>>>>> be8167a... Automatic version bumping again
 
 var pkg = require('./package.json');
 var packageName = pkg.name  + '-' + pkg.version;
@@ -96,6 +101,16 @@ gulp.task('sync', function (done) {
 gulp.task('docs', function (done) {
   writeDocs(done);
 });
+
+gulp.task('version', function (done) {
+  var kibanaVersion = pkg.version.split('-')[0];
+  var timelionVersion = pkg.version.split('-')[1];
+  console.log(semver.patch(timelionVersion));
+  child.exec('npm version --no-git-tag-version ' + kibanaVersion + '-' + '0.1.' + (semver.patch(timelionVersion) + 1), function () {
+    done();
+  });
+});
+
 
 gulp.task('lint', function (done) {
   return gulp.src(['server/**/*.js', 'public/**/*.js', 'public/**/*.jsx'])
@@ -183,3 +198,24 @@ gulp.task('dev', ['sync'], function (done) {
     'timelion.json'
   ], ['sync', 'lint']);
 });
+<<<<<<< HEAD
+=======
+
+
+gulp.task('test', [], function (done) {
+  // A complete hack, but I have no wifi and I want to write tests
+  child.exec('cd ../kibana/installedPlugins/timelion; npm test', function (err, stdout, stderr) {
+    if (err) done(err.code);
+    else done();
+
+    if (stdout) process.stdout.write(stdout);
+    if (stderr) process.stderr.write(stderr);
+  });
+});
+
+gulp.task('dev:test', [], function (done) {
+  gulp.watch([
+    '../kibana/installedPlugins/timelion/**/__test__/**/*'
+  ], ['test']);
+});
+>>>>>>> be8167a... Automatic version bumping again
