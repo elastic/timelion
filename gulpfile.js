@@ -13,11 +13,8 @@ var rimraf = require('rimraf');
 var tar = require('gulp-tar');
 var gzip = require('gulp-gzip');
 var fs = require('fs');
-<<<<<<< HEAD
-=======
 var child = require('child_process');
 var semver = require('semver');
->>>>>>> be8167a... Automatic version bumping again
 
 var pkg = require('./package.json');
 var packageName = pkg.name  + '-' + pkg.version;
@@ -198,9 +195,6 @@ gulp.task('dev', ['sync'], function (done) {
     'timelion.json'
   ], ['sync', 'lint']);
 });
-<<<<<<< HEAD
-=======
-
 
 gulp.task('test', [], function (done) {
   // A complete hack, but I have no wifi and I want to write tests
@@ -218,4 +212,3 @@ gulp.task('dev:test', [], function (done) {
     '../kibana/installedPlugins/timelion/**/__test__/**/*'
   ], ['test']);
 });
->>>>>>> be8167a... Automatic version bumping again
