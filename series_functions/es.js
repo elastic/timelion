@@ -3,6 +3,47 @@ var moment = require('moment');
 var toMS = require('../lib/to_milliseconds.js');
 var Datasource = require('../lib/classes/datasource');
 
+function createDateAgg(config, tlConfig) {
+  var dateAgg = {
+    time_buckets: {
+      meta: {type: 'time_buckets'},
+      date_histogram: {
+        field: config.timefield,
+        interval: config.interval,
+        time_zone: tlConfig.time.timezone,
+        extended_bounds: {
+          min: tlConfig.time.from,
+          max: tlConfig.time.to
+        },
+        min_doc_count: 0
+      }
+    }
+  };
+
+  dateAgg.time_buckets.aggs = {};
+  _.each(config.metric, function (metric, i) {
+    var metric = metric.split(':');
+    if (metric[0] === 'count') {
+      // This is pretty lame, but its how the "doc_count" metric has to be implemented at the moment
+      // It simplifies the aggregation tree walking code considerably
+      dateAgg.time_buckets.aggs[metric] = {
+        bucket_script: {
+          buckets_path: '_count',
+          script: {inline: '_value', lang: 'expression'}
+        }
+      };
+    } else if (metric[0] && metric[1]) {
+      var metricName = metric[0] + '(' + metric[1] + ')';
+      dateAgg.time_buckets.aggs[metricName] = {};
+      dateAgg.time_buckets.aggs[metricName][metric[0]] = {field: metric[1]};
+    } else {
+      throw new Error ('`metric` requires metric:field or simply count');
+    }
+  });
+
+  return dateAgg;
+}
+
 function buildRequest(config, tlConfig) {
 
   var bool = {must: [], must_not: []};
@@ -46,7 +87,7 @@ function buildRequest(config, tlConfig) {
           }
         }
       },
-      size: 0
+      aggs: {}
     }
   };
 
@@ -60,7 +101,20 @@ function buildRequest(config, tlConfig) {
     }
   }
 
-  return searchRequest;
+  _.assign(aggCursor, createDateAgg(config, tlConfig));
+
+
+
+  return {
+    index: config.index,
+    body: {
+      query: {
+        bool: bool
+      },
+      aggs: aggs,
+      size: 0
+    }
+  };
 }
 
 module.exports = new Datasource('es', {
@@ -68,12 +122,19 @@ module.exports = new Datasource('es', {
     {
       name: 'q',
       types: ['string', 'null'],
+      multi: true,
       help: 'Query in lucene query string syntax'
     },
     {
       name: 'metric',
       types: ['string', 'null'],
       help: 'An elasticsearch single value metric agg, eg avg, sum, min, max or cardinality, followed by a field. Eg "sum:bytes"'
+    },
+    {
+      name: 'split',
+      types: ['string', 'null'],
+      multi: true,
+      help: 'An elasticsearch field to split the series on and a limit. Eg, "hostname:10" to get the top 10 hostnames'
     },
     {
       name: 'index',
