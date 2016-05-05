@@ -7,6 +7,8 @@ var moment = require('moment-timezone');
 
 require('angularSortableView');
 
+
+
 require('plugins/timelion/directives/chart/chart');
 require('plugins/timelion/directives/interval/interval');
 
@@ -29,6 +31,10 @@ var app = require('ui/modules').get('apps/timelion', ['angular-sortable-view']);
 
 require('plugins/timelion/services/saved_sheets');
 require('plugins/timelion/services/_saved_sheet');
+
+require('plugins/kibana/visualize/saved_visualizations/saved_visualizations');
+require('plugins/kibana/discover/saved_searches/saved_searches');
+require('./vis');
 
 require('ui/saved_objects/saved_object_registry').register(require('plugins/timelion/services/saved_sheet_register'));
 
@@ -53,7 +59,7 @@ require('ui/routes')
   });
 
 app.controller('timelion', function (
-  $scope, $http, timefilter, AppState, courier, $route, $routeParams, kbnUrl, Notifier, config, $timeout, Private) {
+  $scope, $http, timefilter, AppState, courier, $route, $routeParams, kbnUrl, Notifier, config, $timeout, Private, savedVisualizations) {
 
   // TODO: For some reason the Kibana core doesn't correctly do this for all apps.
   moment.tz.setDefault(config.get('dateFormat:tz'));
@@ -101,7 +107,8 @@ app.controller('timelion', function (
     $scope.$listen(timefilter, 'fetch', $scope.search);
 
     $scope.opts = {
-      save: save,
+      saveExpression: saveExpression,
+      saveSheet: saveSheet,
       savedSheet: savedSheet,
       state: $scope.state,
       search: $scope.search,
@@ -194,7 +201,7 @@ app.controller('timelion', function (
 
   $scope.safeSearch = _.debounce($scope.search, 500);
 
-  function save() {
+  function saveSheet() {
     savedSheet.id = savedSheet.title;
     savedSheet.timelion_sheet = $scope.state.sheet;
     savedSheet.timelion_interval = $scope.state.interval;
@@ -208,6 +215,21 @@ app.controller('timelion', function (
           kbnUrl.change('/{{id}}', {id: savedSheet.id});
         }
       }
+    });
+  };
+
+  function saveExpression(title) {
+    savedVisualizations.get({type: 'timelion'}).then(function (savedExpression) {
+      savedExpression.id = title;
+      savedExpression.visState.params = {
+        expression: $scope.state.sheet[$scope.state.selected],
+        interval: $scope.state.interval
+      };
+      savedExpression.title = title;
+      savedExpression.visState.title = title;
+      savedExpression.save().then(function (id) {
+        if (id) notify.info('Saved expression as "' + savedExpression.title + '"');
+      });
     });
   };
 

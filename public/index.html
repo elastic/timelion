@@ -2,8 +2,7 @@
   <navbar class="timelion-navbar" scroll-class="timelion-scroll-class-header" scroll-limit=45 ng-show="chrome.getVisible()">
     <form role="form" class="fill inline-form" ng-submit="search()" name="discoverSearch">
       <div class="typeahead">
-        <div class="input-group"
-          ng-class="discoverSearch.$invalid ? 'has-error' : ''">
+        <div class="input-group">
           <input input-focus
             ng-model="state.sheet[state.selected]"
             timelion-expression="{{state.sheet[state.selected]}}"
@@ -15,7 +14,6 @@
           <timelion-interval model="state.interval"></timelion-interval>
 
           <button type="submit"
-            ng-disabled="discoverSearch.$invalid"
             aria-label="Search">
             <span aria-hidden="true" class="fa fa-play"></span></button>
         </div>
