@@ -1,4 +1,3 @@
-
 var gulp = require('gulp');
 var _ = require('lodash');
 var yargs = require('yargs').argv;
@@ -15,6 +14,7 @@ var gzip = require('gulp-gzip');
 var fs = require('fs');
 var child = require('child_process');
 var semver = require('semver');
+var mocha = require('gulp-mocha');
 
 var pkg = require('./package.json');
 var packageName = pkg.name  + '-' + pkg.version;
@@ -197,19 +197,27 @@ gulp.task('dev', ['sync'], function (done) {
   ], ['sync', 'lint']);
 });
 
-gulp.task('test', [], function (done) {
-  // A complete hack, but I have no wifi and I want to write tests
-  child.exec('cd ../kibana/installedPlugins/timelion; npm test', function (err, stdout, stderr) {
-    if (err) done(err.code);
-    else done();
-
-    if (stdout) process.stdout.write(stdout);
-    if (stderr) process.stderr.write(stderr);
-  });
+gulp.task('dev', ['sync'], function (done) {
+  gulp.watch([
+    'index.js',
+    'node_modules',
+    'public/**/*',
+    'bower_components',
+    'fit_functions/*',
+    'handlers/**/*',
+    'init.js',
+    'lib/**/*',
+    'routes/**/*',
+    'series_functions/**/*',
+    'timelion.json'
+  ], ['sync', 'test']);
 });
 
-gulp.task('dev:test', [], function (done) {
-  gulp.watch([
-    '../kibana/installedPlugins/timelion/**/__test__/**/*'
-  ], ['test']);
+gulp.task('test', ['lint'], function () {
+  require('babel-core/register');
+  return gulp.src([
+    'series_functions/__test__/**/*.js'
+  ], { read: false })
+  .pipe(mocha({ reporter: 'list' }))
+  .on('error', gulpUtil.log);
 });
