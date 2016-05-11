@@ -30,6 +30,7 @@ var include = [
   'node_modules',
   'public',
   'bower_components',
+  'vendor_components',
   'init.js',
   'server',
   'timelion.json',
@@ -183,6 +184,7 @@ gulp.task('dev', ['sync'], function (done) {
     'node_modules',
     'public/**/*',
     'bower_components',
+    'vendor_components',
     'init.js',
     'server/**/*',
     'timelion.json'
