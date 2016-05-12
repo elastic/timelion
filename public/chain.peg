@@ -36,7 +36,7 @@ arg_list
  }
 
 more_args
- = ','? space? arg:argument {return arg;}
+ = space? ',' space? arg:argument {return arg;}
 
 argument
  = name:function_name '=' value:arg_type {
@@ -131,7 +131,7 @@ reference
 
 
 chain
- = func:function rest:function* {return {type: 'chain', chain: [func].concat(rest)}}
+ = func:function space? rest:function* {return {type: 'chain', chain: [func].concat(rest)}}
 
 group
  = '(' space? grouped:series+ space? ')' functions:function* {
@@ -161,7 +161,7 @@ literal "literal"
   }
 
 space
- = [\ \t]+
+ = [\ \t\r\n]+
 
 dq_char
   = "\\" sequence:('"' / "\\") { return sequence; }
