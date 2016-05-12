@@ -33,6 +33,7 @@
     "lodash": "^3.10.1",
     "mkdirp": "^0.5.1",
     "mocha": "^2.3.0",
+    "proxyquire": "^1.7.9",
     "rimraf": "^2.4.3",
     "rsync": "^0.4.0",
     "semver": "^5.1.0",
