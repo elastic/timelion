@@ -207,7 +207,7 @@ gulp.task('dev', ['sync'], function (done) {
   ], ['sync', 'test']);
 });
 
-gulp.task('test', ['lint'], function () {
+gulp.task('test', [], function () {
   require('babel-core/register');
   return gulp.src([
     'server/**/__test__/**/*.js'
