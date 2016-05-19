@@ -12,7 +12,7 @@ module.exports = function (dataTuples, targetTuples) {
 
     if (dataTuples[0] && time >= dataTuples[0][0]) {
       currentCarry = dataTuples[0][1];
-      dataTuples.shift();
+      if (dataTuples.length > 1) { dataTuples.shift(); }
     }
 
     return [bucket[0], currentCarry];
