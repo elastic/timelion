@@ -97,9 +97,7 @@ gulp.task('docs', function (done) {
 });
 
 gulp.task('version', function (done) {
-  var kibanaVersion = pkg.version.split('-')[0];
-  var timelionVersion = pkg.version.split('-')[1];
-  var newVersion = kibanaVersion + '-' + '0.1.' + (semver.patch(timelionVersion) + 1);
+  var newVersion = '0.1.' + (semver.patch(pkg.version) + 1);
   child.exec('npm version --no-git-tag-version ' + newVersion, function () {
     console.log('Timelion version is ' + newVersion);
     done();
@@ -145,15 +143,15 @@ gulp.task('package', ['build'], function (done) {
 gulp.task('release', ['package'], function (done) {
   var filename = packageName + '.tar.gz';
 
-  // Upload to both places.
-  var keys = ['kibana/timelion/', 'elastic/timelion/'];
+  // Upload to both elastic and kibana since there's been confusion about where the thing is.
+  var keys = [
+    'kibana/timelion/timelion-latest.tar.gz',
+    'elastic/timelion/timelion-latest.tar.gz',
+    'kibana/timelion/' + filename,
+    'elastic/timelion/' + filename
+  ];
 
   _.each(keys, function (key) {
-    if (yargs.latest) {
-      key += 'timelion-latest.tar.gz';
-    } else {
-      key += filename;
-    }
     var s3 = new aws.S3();
     var params = {
       Bucket: 'download.elasticsearch.org',
