@@ -4,6 +4,7 @@ var configFile = require('../timelion.json');
 var moment = require('moment-timezone');
 
 require('plugins/timelion/directives/cells/cells');
+require('plugins/timelion/directives/fullscreen/fullscreen');
 require('plugins/timelion/directives/interval/interval');
 require('plugins/timelion/directives/expression_directive');
 require('plugins/timelion/directives/scroll_class');
@@ -81,6 +82,7 @@ app.controller('timelion', function (
     $scope.configTemplate.toggle('docs');
   }
 
+  $scope.transient = {};
   $scope.state = new AppState(getStateDefaults());
   function getStateDefaults() {
     return {
