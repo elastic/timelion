@@ -147,7 +147,6 @@ app.controller('timelion', function (
   };
 
   $scope.setActiveCell = function (cell) {
-    console.log(cell);
     $scope.state.selected = cell;
   };
 
