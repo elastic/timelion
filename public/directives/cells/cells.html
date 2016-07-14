@@ -11,7 +11,7 @@
     ng-class="{active: $index === state.selected}"
     >
 
-    <div chart="sheet[$index]" search="onSearch" interval="state.interval"></div>
+    <div chart="sheet[$index].list" search="onSearch" interval="state.interval"></div>
     <div class="cell-actions">
       <div class="cell-id"><span>{{$index + 1}}</span></div>
 
