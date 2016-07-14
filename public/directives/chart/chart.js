@@ -17,7 +17,7 @@ require('flotAxisLabels');
 require('./observe_resize');
 
 var app = require('ui/modules').get('apps/timelion', []);
-var template = '<div class="chart-title"></div><div class="chart-canvas"></div>';
+var template = '<div class="chart-top-title"></div><div class="chart-canvas"></div>';
 
 app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Private, config) {
   return {
@@ -109,11 +109,13 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
       });
 
       $scope.$on('timelionPlotHover', function (angularEvent, flotEvent, pos, time) {
+        if (!$scope.plot) return;
         $scope.plot.setCrosshair(pos);
         debouncedSetLegendNumbers(pos);
       });
 
       $scope.$on('timelionPlotLeave', function (angularEvent, flotEvent, pos, time) {
+        if (!$scope.plot) return;
         $scope.plot.clearCrosshair();
         clearLegendNumbers();
       });
@@ -182,7 +184,7 @@ app.directive('chart', function ($compile, $rootScope, timefilter, $timeout, Pri
         var canvasElem = $('.chart-canvas', $elem);
 
         var title = _(plotConfig).map('_title').compact().last();
-        $('.chart-title', $elem).text(title == null ? '' : title);
+        $('.chart-top-title', $elem).text(title == null ? '' : title);
 
         var options = _.cloneDeep(defaultOptions);
 
