@@ -220,6 +220,13 @@ Argument | Accepts | Description
 --- | --- | ---
 precision | *number* | Number of digits to round each value to  
 
+#### .props()
+Use at your own risk, sets arbitrary properties on the series. For example .props(label=bears!)
+
+Argument | Accepts | Description
+--- | --- | ---
+global | *boolean* | Set props on the seriesList vs on each series  
+
 #### .range()
 Changes the max and min of a series while keeping the same shape
 
