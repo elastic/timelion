@@ -19,13 +19,13 @@ Timelion makes all that possible, and more. Timelion is an Elastic {Re}search pr
 ### Timelion expressions
 Every Timelion expression starts with a data source function. For example .elasticsearch(*) (or .es(*) for short). That’s about as simple as it gets right? Count everything in Elasticsearch over time. Easy peasy. As you can see, functions always start with a '.' (dot). What if I want to answer that first question above: “How many pages does each unique user hit over time”. Well, I could plot the two parts together on the same chart, by separating them with a comma. But there's a better way ...
 
-![](https://www.elastic.co/assets/blt6858173f61f41f74/Screen%20Shot%202015-11-12%20at%202.16.23%20PM.png) 
+![](https://www.elastic.co/assets/blt7a967a3524cc15dc/Screen%20Shot%202015-11-12%20at%202.16.23%20PM.png) 
 We can do more than individual functions, we can chain functions! What I really want is to divide total hits by unique users. WE CAN DO THAT. SCORE. What we're doing here is saying: Get everything, then divide every point in that series, by every point in this cardinality-of-user-field series I'm passing to .divide()
 
-![](https://www.elastic.co/assets/blt7e65751490506e7f/Screen%20Shot%202015-11-12%20at%202.14.56%20PM.png)
+![](https://www.elastic.co/assets/blt6cc0ad2c799ea10d/Screen%20Shot%202015-11-12%20at%202.14.56%20PM.png)
 We can do that, we can do more: Timelion can reach out to other data sources, using the exact same syntax. For example, the Worldbank’s Data API. Series even can be grouped together into lists with parenthesis and a function applied to the grouping. All data sources can receive an offset argument, eg offset=-1M to compare last month as if it was happening now. Timeline can even fit series with dissimilar intervals to a reference, then enabling you to divide you by-the-minute Elasticsearch series with say, yearly Worldbank data.
 
-![](https://www.elastic.co/assets/blt9117e105b1535caf/Screen%20Shot%202015-11-12%20at%202.27.39%20PM.png) 
+![](https://www.elastic.co/assets/blteb5c1c0a3bd9b7a1/Screen%20Shot%202015-11-12%20at%202.27.39%20PM.png) 
 
 That means we can mix and match these sources, even within the same expression.Thus we can ask crazy questions like “What percentage of the US Gross Domestic Product is my company personally responsible for year-to-date?” Also, if that number is big, how about sharing with your old buddy Rashid? Just kidding. Or am I?
 
@@ -42,4 +42,4 @@ You can also install offline by grabbing [the latest build](https://download.ela
 Now use it. Abuse it.
 Once you've installed it, you'll have a new icon in Kibana, which opens the app switcher and allows you to enter other apps
 
-![](https://www.elastic.co/assets/bltb6b576d300d1ae45/Screen%20Shot%202015-11-12%20at%205.33.20%20PM.png)
+![](https://www.elastic.co/assets/bltaf362157e84a4d44/Screen%20Shot%202015-11-12%20at%205.33.20%20PM.png)
