@@ -8,11 +8,12 @@ module.exports = new Chainable('log', {
       types: ['seriesList']
     }
   ],
-  help: 'Return the base 10 logarithm value of each value in the series list',
+  help: 'Return the logarithm value of each value in the series list',
   fn: function logFn(args) {
+    var config = args.byName;
     return alter(args, function (eachSeries) {
       var data = _.map(eachSeries.data, function (point) {
-        return [point[0], Math.log10(point[1])];
+        return [point[0], Math.log(point[1]) / Math.log(config.base || 10)];
       });
       eachSeries.data = data;
       return eachSeries;

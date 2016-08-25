@@ -78,7 +78,9 @@ Return the absolute value of each value in the series list
 #### .log()
 Return the base 10 logarithm value of each value in the series list
 
-*This function does not accept any arguments.*
+Argument | Accepts | Description
+--- | --- | ---
+base | *number* | Set logarithmic base, 10 by default
 
 #### .bars()
 Show the seriesList as bars

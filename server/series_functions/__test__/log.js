@@ -14,7 +14,7 @@ describe(filename, () => {
 
   it('should return the log10 value of every value', () => {
     return invoke(fn, [seriesList]).then((r) => {
-      expect(_.map(r.output.list[4].data, 1)).to.eql([1, 2, 1, 3]);
+      expect(_.map(r.output.list[4].data, 1)).to.eql([1, 2, 1, 0]);
     });
   });
 
