@@ -6,9 +6,15 @@ module.exports = new Chainable('log', {
     {
       name: 'inputSeries',
       types: ['seriesList']
+    },
+    {
+      name: 'base',
+      types: ['number'],
+      help: 'Set logarithmic base, 10 by default'
+
     }
   ],
-  help: 'Return the logarithm value of each value in the series list',
+  help: 'Return the logarithm value of each value in the series list (default base: 10)',
   fn: function logFn(args) {
     var config = args.byName;
     return alter(args, function (eachSeries) {
