@@ -75,6 +75,13 @@ Return the absolute value of each value in the series list
 
 *This function does not accept any arguments.*
 
+#### .log()
+Return the base 10 logarithm value of each value in the series list
+
+Argument | Accepts | Description
+--- | --- | ---
+base | *number* | Set logarithmic base, 10 by default
+
 #### .bars()
 Show the seriesList as bars
 
@@ -292,21 +299,21 @@ color | *string* | Color of axis label
 
 Argument | Accepts | Description
 --- | --- | ---
-alpha | *number* | 
+alpha | *number* |
         Smoothing weight from 0 to 1.
         Increasing alpha will make the new series more closely follow the original.
         Lowering it will make the series smoother  
-beta | *number* | 
+beta | *number* |
         Trending weight from 0 to 1.
         Increasing beta will make rising/falling lines continue to rise/fall longer.
         Lowering it will make the function learn the new trend faster  
-gamma | *number* | 
+gamma | *number* |
         Seasonal weight from 0 to 1. Does your data look like a wave?
         Increasing this will give recent seasons more importance, thus changing the wave form faster.
         Lowering it will reduce the importance of new seasons, making history more important.
-          
+
 season | *string* | How long is the season, eg, 1w if you pattern repeats weekly. (Only useful with gamma)  
-sample | *number* | 
+sample | *number* |
       The number of seasons to sample before starting to "predict" in a seasonal series.
       (Only useful with gamma, Default: all)  
 
@@ -318,4 +325,3 @@ Argument | Accepts | Description
 mode | *string* | The algorithm to use for generating the trend line. One of: linear, log  
 start | *number* | Where to start calculating from the beginning or end. For example -10 would start calculating 10 points from the end, +15 would start 15 points from the beginning. Default: 0  
 end | *number* | Where to stop calculating from the beginning or end. For example -10 would stop calculating 10 points from the end, +15 would stop 15 points from the beginning. Default: 0  
-
