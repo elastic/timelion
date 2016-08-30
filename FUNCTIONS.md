@@ -165,6 +165,13 @@ stack | *boolean* | Stack lines, often misleading. At least use some fill if you
 show | *number/boolean* | Show or hide lines  
 steps | *number/boolean* | Show line as step, eg, do not interpolate between points  
 
+#### .log()
+Return the logarithm value of each value in the series list (default base: 10)
+
+Argument | Accepts | Description
+--- | --- | ---
+base | *number* | Set logarithmic base, 10 by default  
+
 #### .max()
 Maximum values of one or more series in a seriesList to each position, in each series, of the input seriesList
 
