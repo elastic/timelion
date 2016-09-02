@@ -1,4 +1,6 @@
-# Timelion
+# HEADS UP: This repo is deprecated. Timelion has been merged into Kibana. File issues over at [elastic/kibana](https://www.github.com/elastic/kibana)
+
+## Timelion
 
 Timelion pronounced time-lion, not time-leon, brings together totally independent data sources into a single interface, driven by a simple, one-line expression language combining data retrieval, time series combination and transformation, plus visualization.
 
